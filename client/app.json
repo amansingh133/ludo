@@ -1,4 +1,7 @@
 {
   "name": "client",
-  "displayName": "client"
+  "displayName": "client",
+  "plugins": [
+    "expo-router"
+  ]
 }
