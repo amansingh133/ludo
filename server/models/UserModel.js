@@ -15,6 +15,10 @@ class User {
   get userDetails() {
     return { ...this._userData };
   }
+
+  get socketId() {
+    return this._userData.socketId;
+  }
 }
 
 export default User;

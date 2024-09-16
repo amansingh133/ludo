@@ -2,20 +2,24 @@ import React, {useState, useEffect} from 'react';
 import {View, TextInput, Pressable, Alert, Text} from 'react-native';
 import {io} from 'socket.io-client';
 import commonStyles from '../styles/commonStyles';
-import useServerInfo from '../hooks/useServerInfo';
-import {useSocket} from '../hooks/useSocketContext';
+import useDeviceInfo from '../hooks/useDeviceInfo';
+import {useSocket} from '../contexts/useSocketContext';
+import {useGame} from '../contexts/useGameContext';
 
 const Home = ({navigation}) => {
   const [name, setName] = useState('');
   const {socket, setSocket} = useSocket();
-  const {serverUrl} = useServerInfo();
+  const {deviceInfo} = useDeviceInfo();
+  const {updateUserList, setCurrentUser} = useGame();
 
   useEffect(() => {
     if (socket) {
       socket.on('connect', () => {
-        socket.emit('addUser', name);
+        socket.emit('addUser', {name});
         socket.on('userList', userList => {
-          navigation.navigate('Waiting', {users: userList});
+          updateUserList(userList);
+          setCurrentUser(userList.find(user => user.name === name));
+          navigation.navigate('Waiting');
         });
       });
 
@@ -37,7 +41,9 @@ const Home = ({navigation}) => {
       return;
     }
 
-    const newSocket = io(serverUrl);
+    const newSocket = io(deviceInfo.serverUrl, {
+      transports: ['websocket', 'polling'],
+    });
     setSocket(newSocket);
   };
 

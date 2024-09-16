@@ -1,17 +1,21 @@
 import React from 'react';
-import {Image, StyleSheet} from 'react-native';
+import {Image} from 'react-native';
+import useDeviceInfo from '../hooks/useDeviceInfo';
 
-const StarIcon = ({size, color}) => (
-  <Image
-    source={require('../assets/Icons/star-outline.png')} // Adjust the path if needed
-    style={[styles.icon, {width: size, height: size, tintColor: color}]}
-  />
-);
+const StarIcon = () => {
+  const {cellSize} = useDeviceInfo();
 
-const styles = StyleSheet.create({
-  icon: {
-    resizeMode: 'contain',
-  },
-});
+  const size = cellSize / 1.2;
+  const color = 'black';
+
+  return (
+    <Image
+      source={require('../assets/Icons/star-outline.png')}
+      style={[{width: size, height: size}]}
+      resizeMode="contain"
+      tintColor={color}
+    />
+  );
+};
 
 export default StarIcon;

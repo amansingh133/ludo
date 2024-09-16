@@ -20,8 +20,11 @@ const commonStyles = StyleSheet.create({
     marginBottom: 20,
   },
   user: {
-    fontSize: 16,
+    fontSize: 20,
     marginVertical: 5,
+    color: 'black',
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
   button: {
     backgroundColor: '#87CEEB',

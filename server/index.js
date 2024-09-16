@@ -2,8 +2,8 @@ import express from "express";
 import http from "http";
 
 //imports
-import configureSocket from "./config/socket.js";
-import setUpSocketEvents from "./handlers/socket.js";
+import configureSocket from "./config/socketConfig.js";
+import setUpSocketEvents from "./handlers/socketHandler.js";
 
 const app = express();
 const server = http.createServer(app);

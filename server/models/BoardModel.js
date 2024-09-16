@@ -1,4 +1,4 @@
-import { COLOR_CELLS, BLACK_CELLS } from "./Cells.js";
+import { COLOR_CELLS, BLACK_CELLS } from "./CellsModel.js";
 
 class Board {
   static idCounter = 0;
@@ -10,7 +10,7 @@ class Board {
         colorCells: COLOR_CELLS,
         blackCells: BLACK_CELLS,
         safeCells: [],
-        cellIds: [],
+        cellIds: this.generateCellIds(),
       },
       writable: false,
       configurable: false,
@@ -18,6 +18,13 @@ class Board {
     });
 
     this.updateSafeCells();
+  }
+
+  generateCellIds() {
+    return Array.from(
+      { length: 225 },
+      (_, i) => `${Math.floor(i / 15)}-${i % 15}`
+    );
   }
 
   updateSafeCells() {
@@ -33,32 +40,14 @@ class Board {
     this._boardData.safeCells = [...cells];
   }
 
-  get id() {
-    return this._boardData.id;
-  }
-
-  get colorCells() {
-    return this._boardData.colorCells;
-  }
-
-  get blackCells() {
-    return this._boardData.blackCells;
-  }
-
-  get safeCells() {
-    return this._boardData.safeCells;
-  }
-
-  get cellIds() {
-    return this._boardData.cellIds;
-  }
-
-  set cellIds(ids) {
-    if (Array.isArray(ids)) {
-      this._boardData.cellIds = [...ids];
-    } else {
-      throw new TypeError("cellIds must be an array");
-    }
+  get boardDetails() {
+    return {
+      id: this._boardData.id,
+      colorCells: this._boardData.colorCells,
+      blackCells: this._boardData.blackCells,
+      safeCells: this._boardData.safeCells,
+      cellIds: this._boardData.cellIds,
+    };
   }
 }
 
